@@ -9,6 +9,7 @@ import Image from "next/image"
 
 import { signIn, signOut, useSession } from "next-auth/react"
 import { Discovery } from "aws-sdk"
+import Link from "next/link"
 
 function Header() {
   const { data: session, status } = useSession()
@@ -17,7 +18,9 @@ function Header() {
     <header className="dark:bg-gray-800 divide-y  sticky top-0 z-40 inset-x-0">
       <div className="flex justify-between items-center w-full h-10 px-6 py-8  ">
         <div className="flex cursor-pointer">
-          <h1 className="text-xl font-bold">Youtube Clone</h1>
+          <Link href={`/`}>
+            <h1 className="text-xl font-bold">Youtube Clone</h1>
+          </Link>
         </div>
 
         <div className="flex items-center">
