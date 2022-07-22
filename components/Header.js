@@ -14,7 +14,7 @@ function Header() {
   const { data: session, status } = useSession()
 
   return (
-    <header className="dark:bg-gray-800 divide-y lg:ml-[70px] xl:ml-[76px] sticky top-0 z-40 inset-x-0">
+    <header className="dark:bg-gray-800 divide-y  sticky top-0 z-40 inset-x-0">
       <div className="flex justify-between items-center w-full h-10 px-6 py-8  ">
         <div className="flex cursor-pointer">
           <h1 className="text-xl font-bold">Youtube Clone</h1>
