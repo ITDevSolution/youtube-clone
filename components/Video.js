@@ -3,6 +3,7 @@ import React from "react"
 import Link from "next/link"
 
 import timeago from "lib/timeago"
+import LoadMore from "./LoadMore"
 
 export default function Video({ video }) {
   return (
