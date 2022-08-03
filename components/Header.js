@@ -13,6 +13,13 @@ import Link from "next/link"
 
 function Header() {
   const { data: session, status } = useSession()
+  console.log(session)
+
+  const loading = status === "loading"
+
+  if (loading) {
+    return <h1>Loading....</h1>
+  }
 
   return (
     <header className="dark:bg-gray-800 divide-y  sticky top-0 z-40 inset-x-0">
@@ -40,21 +47,17 @@ function Header() {
         </div>
 
         {session ? (
-          <div
-            onClick={() => signOut()}
-            className="hidden lg:flex items-center space-x-2 border border-white p-2 cursor-pointer"
-          >
+          <div className="hidden lg:flex items-center space-x-2 border border-white p-2 ">
             <div className="flex justify-between w-32 ">
-              <ViewGridIcon className="h-6 cursor-pointer" />
-              <DotsVerticalIcon className="h-6 cursor-pointer" />
-              {/* <Image
-            src={``}
-            alt=""
-            width="50"
-            height="20"
-            objectFit="containt"
-            className="cursor-pointer"
-            /> */}
+              <Link href={`/channel/${session.user.username}`}>
+                <a className="flex">
+                  <img src={session.user.image} className="h-8 rounded-full" />
+                  <p className="ml-2">{session.user.name}</p>
+                </a>
+              </Link>
+              <div onClick={() => signOut()} className="cursor-pointer">
+                logout
+              </div>
             </div>
           </div>
         ) : (
@@ -65,14 +68,15 @@ function Header() {
             <div className="flex justify-between w-32 ">
               <ViewGridIcon className="h-6 cursor-pointer" />
               <DotsVerticalIcon className="h-6 cursor-pointer" />
-              <Image
+              {/* <Image
                 src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1654199326/NskTwAI5_400x400_i4xss6.jpg`}
                 alt=""
                 width={50}
                 height={30}
                 objectFit="contain"
                 className="cursor-pointer"
-              />
+              /> */}
+              login
             </div>
           </div>
         )}

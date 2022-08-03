@@ -11,6 +11,7 @@ export default function LoadMore({ videos, setVideos, setReachedEnd, author }) {
     if (data.length < amount) {
       setReachedEnd(true)
     }
+
     setVideos([...videos, ...data])
     // console.log(data.length)
   }
