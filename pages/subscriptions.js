@@ -2,7 +2,7 @@ import Videos from "components/Videos"
 import { useState } from "react"
 
 import { useRouter } from "next/router"
-import { useSession } from "next-auth/react"
+import { getSession, useSession } from "next-auth/react"
 
 import { getVideos } from "lib/data"
 import prisma from "lib/prisma"
@@ -46,6 +46,7 @@ export default function Home({ initialVideos }) {
             videos={videos}
             setVideos={setVideos}
             setReachedEnd={setReachedEnd}
+            subscriptions={session.user.id}
           />
         )}
       </div>
@@ -53,8 +54,10 @@ export default function Home({ initialVideos }) {
   )
 }
 
-export async function getServerSideProps() {
-  let videos = await getVideos({}, prisma)
+export async function getServerSideProps(context) {
+  const session = await getSession(context)
+
+  let videos = await getVideos({ subscriptions: session.user.id }, prisma)
   videos = JSON.parse(JSON.stringify(videos))
 
   return {

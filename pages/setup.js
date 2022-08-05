@@ -8,8 +8,6 @@ export default function setup() {
   const { data: session, status } = useSession()
   const loading = status === "loading"
 
-  console.log(session)
-
   const [name, setName] = useState("")
   const [username, setUsername] = useState("")
   const [image, setImage] = useState(null)

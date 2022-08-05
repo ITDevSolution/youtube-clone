@@ -8,12 +8,15 @@ import {
 import Image from "next/image"
 
 import { signIn, signOut, useSession } from "next-auth/react"
+import { useRouter } from "next/router"
+
 import { Discovery } from "aws-sdk"
 import Link from "next/link"
 
 function Header() {
   const { data: session, status } = useSession()
-  console.log(session)
+
+  const router = useRouter()
 
   const loading = status === "loading"
 
@@ -48,6 +51,18 @@ function Header() {
 
         {session ? (
           <div className="hidden lg:flex items-center space-x-2 border border-white p-2 ">
+            {session &&
+              (router.asPath === "/subscriptions" ? (
+                <a className="flex">
+                  <p className="mr-3 font-bold">Subscriptions</p>
+                </a>
+              ) : (
+                <Link href={`/subscriptions`}>
+                  <a className="flex">
+                    <p className="mr-3 underline">Subscriptions</p>
+                  </a>
+                </Link>
+              ))}
             <div className="flex justify-between w-32 ">
               <Link href={`/channel/${session.user.username}`}>
                 <a className="flex">

@@ -1,11 +1,22 @@
 import { amount } from "lib/config"
 
-export default function LoadMore({ videos, setVideos, setReachedEnd, author }) {
+export default function LoadMore({
+  videos,
+  setVideos,
+  setReachedEnd,
+  author,
+  subscriptions,
+}) {
   const handlerLoadMore = async () => {
     const url = `/api/videos?skip=${videos.length}`
     if (author) {
       url += `&author=${author.id}`
     }
+
+    if (subscriptions) {
+      url += `&subscriptions=${subscriptions}`
+    }
+
     const res = await fetch(url)
     const data = await res.json()
     if (data.length < amount) {
