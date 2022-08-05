@@ -4,11 +4,30 @@ import Link from "next/link"
 import timeago from "lib/timeago"
 import Video from "components/Video"
 
+import { useEffect } from "react"
+
 import dynamic from "next/dynamic"
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false })
 
 export default function SingleVideo({ video, videos }) {
   if (!video) return <p className="text-center p-5">Video does not exist !</p>
+
+  useEffect(() => {
+    const incrementViews = async () => {
+      await fetch("/api/view", {
+        body: JSON.stringify({
+          video: video.id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      })
+    }
+
+    incrementViews()
+  }, [])
+
   return (
     <div className="h-screen flex justify-center m-auto">
       <div className="flex w-full md:w-2/3 flex-col mb-4 ">
@@ -27,7 +46,8 @@ export default function SingleVideo({ video, videos }) {
           <div className="">
             <p className="text-2xl font-bold">{video.title}</p>
             <div className="text-gray-400">
-              {video.views} views · {timeago.format(new Date(video.createdAt))}
+              {video.views + 1} views ·{" "}
+              {timeago.format(new Date(video.createdAt))}
             </div>
           </div>
         </div>
